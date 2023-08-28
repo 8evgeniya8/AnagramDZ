@@ -1,33 +1,32 @@
 package hillel.tsukanova;
 
-import java.util.Scanner;
 
 public class AnagramDZ {
-    public static void main(String[]args){
-        Scanner scanner = new Scanner(System.in);
-        String[] t = {"SOLO", "LOSO", "OSLO", "OLSO", "OSOL", "OLOS",
-                "SLOO", "LSOO", "OOLS", "OOSL", "LOOS", "SOOL"};
-        String s="Solo";
-        System.out.println("Задане слово : " + s);
-        System.out.println();
+        String s = "anagram";
+        String t = "nagaram";
 
-        boolean isValidWord = false;
-        while (!isValidWord) {
-            System.out.print("Створи анограму цього слова: ");
-            String input = scanner.nextLine();
+        boolean ff = isAnagram(s, t);
+        public static boolean isAnagram (String s, String t){
+        String processedS = preprocess(s);
+        String processedT = preprocess(t);
 
-            for (String valid : t) {
-                if (input.equalsIgnoreCase(valid)) {
-                    isValidWord = true;
-                    break;
-                }
-            }
-            if (!isValidWord) {
-                System.out.println("Подумай");
-            }
-            scanner.nextLine();
+        if (processedS.length() != processedT.length()) {
+            return false;
         }
-        System.out.println("Молодець (◕‿◕)");
-        scanner.close();
+        int[] kilkict = new int[256];
+
+        for (int i = 0; i < processedS.length(); i++) {
+            kilkict[processedS.charAt(i) - 'a']++;
+            kilkict[processedT.charAt(i) - 'a']--;
+        }
+        for (int g : kilkict) {
+            if (g != 0) {
+                return false;
+            }
+        }
+        return true;
     }
-}
+        public static String preprocess (String source){
+        return source.replaceAll("[^a-zA-Z]", "").toLowerCase();
+    }
+    }
